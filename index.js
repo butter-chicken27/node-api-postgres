@@ -21,5 +21,5 @@ app.put('/users/:name', db.updateUser)
 // app.delete('/users/:id', db.deleteUser)
 
 app.listen(process.env.PORT || 3000, () => {
-    console.log(`App running on port ${port}`)
+    console.log(`App running`)
 })
