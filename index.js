@@ -2,7 +2,6 @@ const express = require('express')
 const db = require('./queries')
 const bodyParser = require('body-parser')
 const app = express()
-const port = 3000
 
 app.use(bodyParser.json())
 app.use(
@@ -21,6 +20,6 @@ app.post('/users', db.createUser)
 app.put('/users/:name', db.updateUser)
 app.put('/users/reset/:name', db.resetUser)
 
-app.listen(port, () => {
-    console.log(`App running on port ${port}`)
+app.listen(process.env.PORT || 3000, () => {
+    console.log(`App running`)
 })
