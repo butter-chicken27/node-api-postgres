@@ -16,6 +16,7 @@ app.get('/', (request, response) => {
 
 app.get('/users', db.getUsers)
 app.get('/users/:name', db.getUserByName)
+app.get('/users/reset/:name', db.isUserActive)
 app.post('/users', db.createUser)
 app.put('/users/:name', db.updateUser)
 app.put('/users/reset/:name', db.resetUser)

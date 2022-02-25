@@ -25,6 +25,15 @@ const getUserByName = (req, res) => {
     })
 }
 
+const isUserActive = (req, res) => {
+    const name = String(req.params.name)
+    pool.query('SELECT count(*) FROM users WHERE username = $1', [name], (err,results) => {
+        if(err) {
+            throw err;
+        }
+        res.status(200).json(results.rows);
+    })
+}
 const createUser = (req, res) => {
     const {name} = req.body
     let level = "1"
@@ -72,4 +81,5 @@ module.exports = {
     createUser,
     updateUser,
     resetUser,
+    isUserActive,
 }
