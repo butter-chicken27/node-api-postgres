@@ -17,7 +17,6 @@ const getUsers = (req, res) => {
 
 const getUserByName = (req, res) => {
     const name = String(req.params.name)
-    console.log(name)
     pool.query('SELECT level FROM users WHERE username = $1', [name], (error, results) => {
         if (error) {
             throw error
@@ -40,8 +39,6 @@ const createUser = (req, res) => {
 const updateUser = (req, res) => {
     const name = String(req.params.name)
     const {choice} = req.body
-    console.log(choice)
-    console.log(name)
     pool.query(
         'UPDATE users SET level = level || $1 where username = $2',
         [choice, name],
@@ -54,14 +51,19 @@ const updateUser = (req, res) => {
     )
 }
 
-const deleteUser = (req, res) => {
-    const id = parseInt(req.params.id)
-    pool.query('DELETE FROM users WHERE id = $1', [id], (error, results) => {
-        if (error) {
-            throw error
+
+const resetUser = (req, res) => {
+    const name = String(req.params.name)
+    pool.query(
+        'UPDATE users SET level = 1 where username = $1',
+        [name],
+        (error, results) => {
+            if(error) {
+                throw error
+            }
+            res.status(200).send(`Game restarted for ${name}`)
         }
-        res.status(200).send(`User deleted with ID: ${id}`)
-    })
+    )
 }
 
 module.exports = {
@@ -69,5 +71,5 @@ module.exports = {
     getUserByName,
     createUser,
     updateUser,
-    deleteUser,
+    resetUser,
 }
